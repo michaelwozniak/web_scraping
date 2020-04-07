@@ -1,0 +1,1 @@
+Project implemented as part of the subject: Web Scraping and Social Media Scraping
