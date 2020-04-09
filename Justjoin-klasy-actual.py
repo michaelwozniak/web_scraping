@@ -18,12 +18,12 @@ class Scraper():
         gecko_path = r'C:/Users/Michal_schudnij/Desktop/Webscraping/class7/geckodriver'
         url = 'https://justjoin.it/'
         options = webdriver.firefox.options.Options()
-        options.headless = False
+        options.headless = True
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
         if login == True:
-			self.log_in()
-
+            self.log_in()
+			
     def log_in(self):
         self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
         self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text()="Sign in as Developer"]').click()
@@ -35,8 +35,6 @@ class Scraper():
         password = self.driver.find_element_by_xpath('//input[@name="password"]')
         my_pass = getpass.getpass('Please provide your password:')
         password.send_keys(my_pass)
-        time.sleep(5)
-        self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
         time.sleep(5)
         self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
         time.sleep(5)
@@ -57,8 +55,14 @@ class Scraper():
         time.sleep(15)
     
     def salary(self):
-        self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text() = "More filters"]').click()
-        time.sleep(5)
+        try:
+            self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
+            time.sleep(5)
+        except:
+            self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
+            time.sleep(5)
+            self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
+            time.sleep(5)
         min_salary = int(input('Choose minimum salary expectations:\n'))
         max_salary = int(input('Choose maximum salary expectations:\n'))
         en =  self.driver.find_element_by_xpath('//span[@class="MuiSlider-thumb MuiSlider-thumbColorSecondary"][@data-index="0"]')
@@ -75,12 +79,29 @@ class Scraper():
     def offers(self):
         if(self.pages_100 == True):
             number = 100
+        else:
+            ## 5 losowo napisałem, moze niech uzytkownik wprowadzi inuptem?
+            number = 5
+        
         links = []
-        # for x in range(1, warunek[if true = 100, if false, niech sobie wybierze uzytkownik])
-        for x in range(1,number+1):
-            link = self.driver.find_element_by_xpath(f'//div[@class="css-1macblb"]/div/div[{x}]/a').get_attribute("href")
-            links.append(link)
-            time.sleep(3)
+        actions = ActionChains(self.driver)
+
+        ## dodać warunek na sytuację, gdy jest mniej niż 100 ofert na stronie!
+        while(len(links)<number):
+            elements = self.driver.find_elements_by_css_selector("a.css-18rtd1e")
+
+            for element in elements:
+                link = element.get_attribute("href")
+                if(link in links):
+                    continue
+                else:
+                    links.append(link)
+                    if (len(links)>=number):
+                        break
+
+            elements[-1].send_keys(Keys.PAGE_DOWN)
+            time.sleep(5)
+        
         return links
     
     def __del__(self):
@@ -93,9 +114,7 @@ class Scraper():
 #         salary()
 #         offers()
         
-
 c = Scraper(pages_100 = True, login = False)
-#c.log_in()
 c.location()
 c.salary()
 c.offers()
