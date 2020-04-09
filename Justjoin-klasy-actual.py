@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[66]:
-
-
 from selenium import webdriver
 import time
 import getpass
@@ -13,9 +7,6 @@ import pandas as pd
 from selenium.webdriver.common.keys import Keys
 import matplotlib.pyplot as plt
 from selenium.webdriver import ActionChains
-
-
-# In[67]:
 
 
 class Scraper():
@@ -30,10 +21,8 @@ class Scraper():
         options.headless = False
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
-
-        
-#     def open_site(self):
-#         self.driver.get(url)
+        if login == True:
+			self.log_in()
 
     def log_in(self):
         self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
@@ -88,7 +77,7 @@ class Scraper():
             number = 100
         links = []
         # for x in range(1, warunek[if true = 100, if false, niech sobie wybierze uzytkownik])
-        for x in range(1,3+1):
+        for x in range(1,number+1):
             link = self.driver.find_element_by_xpath(f'//div[@class="css-1macblb"]/div/div[{x}]/a').get_attribute("href")
             links.append(link)
             time.sleep(3)
@@ -105,39 +94,9 @@ class Scraper():
 #         offers()
         
 
-
-# In[68]:
-
-
-c = Scraper()
-
-
-# In[69]:
-
-
-c.log_in()
-
-
-# In[70]:
-
-
+c = Scraper(pages_100 = True, login = False)
+#c.log_in()
 c.location()
-
-
-# In[71]:
-
-
 c.salary()
-
-
-# In[72]:
-
-
 c.offers()
-
-
-# In[73]:
-
-
 c.__del__()
-
