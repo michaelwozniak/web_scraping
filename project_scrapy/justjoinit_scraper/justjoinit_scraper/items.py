@@ -8,7 +8,7 @@
 import scrapy
 
 
-class PracujplScraperItem(scrapy.Item):
+class JustjoinitScraperItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
