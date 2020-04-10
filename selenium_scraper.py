@@ -11,19 +11,29 @@ from selenium.webdriver import ActionChains
 
 class Scraper():
 
-    
-    def __init__(self, pages_100 = True, login = False):
+    def __init__(self, headless_mode = True, pages_100 = True, login = False, choose_location = False, choose_salary = False):
         self.pages_100 = pages_100
         self.login = login
+        self.choose_location = choose_location
+        self.choose_salary = choose_salary
+        self.headless_mode = headless_mode
+		
         gecko_path = r'C:/Users/Michal_schudnij/Desktop/Webscraping/class7/geckodriver'
         url = 'https://justjoin.it/'
         options = webdriver.firefox.options.Options()
-        options.headless = True
+        if headless_mode == True:
+            options.headless = True
+        else:
+            options.headless = False
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
         if login == True:
             self.log_in()
-			
+        if choose_location == True:
+            self.location()
+        if choose_salary == True:
+            self.salary()
+
     def log_in(self):
         self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
         self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text()="Sign in as Developer"]').click()
@@ -107,15 +117,10 @@ class Scraper():
     def __del__(self):
         self.driver.quit()
         
-#     if __name__ == '__main__':
-#         if (login == False):
-#             login()
-#         location()
-#         salary()
-#         offers()
-        
-c = Scraper(pages_100 = True, login = False)
-c.location()
-c.salary()
-c.offers()
+
+c = Scraper(headless_mode = True, pages_100 = False, login = False, choose_location = False, choose_salary = False)
+
+links = c.offers()
+for link in links:
+    print(link)
 c.__del__()
