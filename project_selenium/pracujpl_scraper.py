@@ -1,13 +1,16 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import getpass
 import datetime
 import os
 from os import path
 import pandas as pd
-from selenium.webdriver.common.keys import Keys
 import matplotlib.pyplot as plt
-from selenium.webdriver import ActionChains
 
 
 class Scraper():
@@ -39,20 +42,26 @@ class Scraper():
 
     def log_in(self):
         # sign in -> sign in as developer
-        self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
-        self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text()="Sign in as Developer"]').click()
-        time.sleep(2)
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button/span[@class='MuiFab-label'][text()='Sign in']")))
+        element.click()
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text()="Sign in as Developer"]')))
+        element.click()
+        
         # user inputs
-        username = self.driver.find_element_by_xpath('//input[@name="email"]')
+        username = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@name="email"]')))
         my_email = input('Please provide your email:')
         username.send_keys(my_email)
-        time.sleep(5)
-        password = self.driver.find_element_by_xpath('//input[@name="password"]')
+        
+        password = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@name="password"]')))
         my_pass = getpass.getpass('Please provide your password:')
         password.send_keys(my_pass)
-        time.sleep(5)
-        self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
-        time.sleep(5)
+        
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[@class="MuiFab-label"][text()="Sign in"]')))
+        element.click()
+        
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="css-mudjgk"][text()="Job offers"]')))
+        element.click()
+
     
     def location(self):
         self.driver.find_element_by_xpath('//span[@class="css-mudjgk"][text()="Job offers"]').click()
