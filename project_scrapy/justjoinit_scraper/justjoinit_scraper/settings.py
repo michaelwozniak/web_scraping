@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for pracujpl_scraper project
+# Scrapy settings for justjoinit_scraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'pracujpl_scraper'
+BOT_NAME = 'justjoinit_scraper'
 
-SPIDER_MODULES = ['pracujpl_scraper.spiders']
-NEWSPIDER_MODULE = 'pracujpl_scraper.spiders'
+SPIDER_MODULES = ['justjoinit_scraper.spiders']
+NEWSPIDER_MODULE = 'justjoinit_scraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'pracujpl_scraper (+http://www.yourdomain.com)'
+#USER_AGENT = 'justjoinit_scraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'pracujpl_scraper.middlewares.PracujplScraperSpiderMiddleware': 543,
+#    'justjoinit_scraper.middlewares.JustjoinitScraperSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'pracujpl_scraper.middlewares.PracujplScraperDownloaderMiddleware': 543,
+#    'justjoinit_scraper.middlewares.JustjoinitScraperDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'pracujpl_scraper.pipelines.PracujplScraperPipeline': 300,
+#    'justjoinit_scraper.pipelines.JustjoinitScraperPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
