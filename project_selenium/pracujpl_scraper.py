@@ -2,7 +2,7 @@ from selenium import webdriver
 import time
 import getpass
 import datetime
-import os
+from os import path
 import pandas as pd
 from selenium.webdriver.common.keys import Keys
 import matplotlib.pyplot as plt
@@ -17,8 +17,9 @@ class Scraper():
         self.choose_location = choose_location
         self.choose_salary = choose_salary
         self.headless_mode = headless_mode
-		
-        gecko_path = r'C:/Users/Michal_schudnij/Desktop/Webscraping/class7/geckodriver'
+
+        gecko_path = os.path.dirname(os.path.abspath('__file__'))
+        #gecko_path = r'C:/Users/Michal_schudnij/Desktop/wb/project_selenium/geckodriver'
         url = 'https://justjoin.it/'
         options = webdriver.firefox.options.Options()
         if headless_mode == True:
