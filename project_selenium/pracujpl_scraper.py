@@ -59,37 +59,52 @@ class Scraper():
         
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[@class="MuiFab-label"][text()="Sign in"]')))
         element.click()
-        
+
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="css-mudjgk"][text()="Job offers"]')))
+        element.click()
+
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
         element.click()
 
     
     def location(self):
-        self.driver.find_element_by_xpath('//span[@class="css-mudjgk"][text()="Job offers"]').click()
-        time.sleep(5)
-        self.driver.find_element_by_xpath('//div[@class="css-son5n9"][text() = "offers with salary"]').click()
-        time.sleep(5)
-        self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text() = "Location"]').click()
-        time.sleep(5)
+        if self.login == True:
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
+            element.click()
+        else:
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="css-mudjgk"][text()="Job offers"]')))
+            element.click()
+
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
+            element.click()
+
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
+            element.click()
+
         # user input
         choose_location = input('Choose location (in Polish):\n')
         ## dodać wszystkie miasta
         if (choose_location in ['Warszawa', 'Kraków', 'Wrocław', 'Poznań', 'Trójmiasto']):
-            self.driver.find_element_by_xpath(f'//span[@class="MuiButton-label"][text() = "{choose_location}"]').click()
-        else: print('There is no such location')
-        time.sleep(15)
-    
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{choose_location}"]')))
+            element.click()
+        else: 
+            print('There is no such location. Offers with all possibilities.')
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="MuiButtonBase-root MuiIconButton-root css-tze5xj"]')))
+            element.click()
+
     def salary(self):
         # sometimes window 'sign in' covers 'more filters'
+        ## BLAD TU WYSKAKUJE
         try:
-            self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
-            time.sleep(5)
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
+            element.click()
         except:
-            self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
-            time.sleep(5)
-            self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
-            time.sleep(5)
-        
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[@class="MuiButtonBase-root MuiFab-root css-t8t650 MuiFab-extended MuiFab-sizeMedium MuiFab-secondary"][text()="Sign in"]')))
+            element.click()
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
+            element.click()
+
+        time.sleep(10)
         # user inputs
         min_salary = int(input('Choose minimum salary expectations:\n'))
         max_salary = int(input('Choose maximum salary expectations:\n'))
@@ -102,9 +117,9 @@ class Scraper():
         move2 = ActionChains(self.driver)
         # swipe horizontal slider due to user input (right-hand edge)
         move2.click_and_hold(en).move_by_offset(11 * (max_salary - 50000) / 1000, 0).release().perform()
-        time.sleep(30)
-        self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text() = "Show offers"]').click()
-        time.sleep(5)        
+        time.sleep(30)    
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Show offers"]')))
+        element.click()
 
     def offers(self):
         if(self.pages_100 == True):
@@ -138,7 +153,7 @@ class Scraper():
         self.driver.quit()
         
 
-c = Scraper(headless_mode = True, pages_100 = False, login = False, choose_location = False, choose_salary = False)
+c = Scraper(headless_mode = True, pages_100 = False, login = False, choose_location = False, choose_salary = True)
 
 links = c.offers()
 for link in links:
