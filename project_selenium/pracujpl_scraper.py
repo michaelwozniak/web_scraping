@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 import getpass
 import datetime
+import os
 from os import path
 import pandas as pd
 from selenium.webdriver.common.keys import Keys
@@ -11,6 +12,7 @@ from selenium.webdriver import ActionChains
 
 class Scraper():
 
+    # declaring options
     def __init__(self, headless_mode = True, pages_100 = True, login = False, choose_location = False, choose_salary = False):
         self.pages_100 = pages_100
         self.login = login
@@ -18,8 +20,8 @@ class Scraper():
         self.choose_salary = choose_salary
         self.headless_mode = headless_mode
 
-        gecko_path = os.path.dirname(os.path.abspath('__file__'))
-        #gecko_path = r'C:/Users/Michal_schudnij/Desktop/wb/project_selenium/geckodriver'
+        # path of geckodriver
+        gecko_path = path.join(os.path.dirname(os.path.abspath('__file__')), 'geckodriver')
         url = 'https://justjoin.it/'
         options = webdriver.firefox.options.Options()
         if headless_mode == True:
@@ -36,9 +38,11 @@ class Scraper():
             self.salary()
 
     def log_in(self):
+        # sign in -> sign in as developer
         self.driver.find_element_by_xpath('//button/span[@class="MuiFab-label"][text()="Sign in"]').click()
         self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text()="Sign in as Developer"]').click()
         time.sleep(2)
+        # user inputs
         username = self.driver.find_element_by_xpath('//input[@name="email"]')
         my_email = input('Please provide your email:')
         username.send_keys(my_email)
@@ -57,15 +61,16 @@ class Scraper():
         time.sleep(5)
         self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text() = "Location"]').click()
         time.sleep(5)
+        # user input
         choose_location = input('Choose location (in Polish):\n')
         ## dodać wszystkie miasta
         if (choose_location in ['Warszawa', 'Kraków', 'Wrocław', 'Poznań', 'Trójmiasto']):
             self.driver.find_element_by_xpath(f'//span[@class="MuiButton-label"][text() = "{choose_location}"]').click()
         else: print('There is no such location')
-        #     skill.send_keys(Keys.ENTER)
         time.sleep(15)
     
     def salary(self):
+        # sometimes window 'sign in' covers 'more filters'
         try:
             self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
             time.sleep(5)
@@ -74,14 +79,18 @@ class Scraper():
             time.sleep(5)
             self.driver.find_element_by_xpath('//span[@class="css-1fptokh"][text() = "More filters"]').click()
             time.sleep(5)
+        
+        # user inputs
         min_salary = int(input('Choose minimum salary expectations:\n'))
         max_salary = int(input('Choose maximum salary expectations:\n'))
         en =  self.driver.find_element_by_xpath('//span[@class="MuiSlider-thumb MuiSlider-thumbColorSecondary"][@data-index="0"]')
         move1 = ActionChains(self.driver)
+        # swipe horizontal slider due to user input (left-hand edge)
         move1.click_and_hold(en).move_by_offset(11 * min_salary / 1000, 0).release().perform()
         time.sleep(30)
         en =  self.driver.find_element_by_xpath('//span[@class="MuiSlider-thumb MuiSlider-thumbColorSecondary"][@data-index="1"]')
         move2 = ActionChains(self.driver)
+        # swipe horizontal slider due to user input (right-hand edge)
         move2.click_and_hold(en).move_by_offset(11 * (max_salary - 50000) / 1000, 0).release().perform()
         time.sleep(30)
         self.driver.find_element_by_xpath('//span[@class="MuiButton-label"][text() = "Show offers"]').click()
