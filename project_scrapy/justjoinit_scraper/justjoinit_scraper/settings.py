@@ -98,5 +98,5 @@ from shutil import which
 
 SELENIUM_DRIVER_NAME = 'chrome'
 SELENIUM_DRIVER_EXECUTABLE_PATH = 'selenium_driver/chromedriver'
-SELENIUM_DRIVER_ARGUMENTS=[]
+SELENIUM_DRIVER_ARGUMENTS=['--headless']
 # '--headless'
