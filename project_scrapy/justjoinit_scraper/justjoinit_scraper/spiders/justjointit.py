@@ -1,4 +1,4 @@
-# -*- coding: windows-1250 -*-
+# -*- coding: utf8 -*-
 import scrapy
 from scrapy_selenium import SeleniumRequest
 from selenium.webdriver.common.by import By
@@ -23,9 +23,41 @@ class DataHandler(scrapy.Item):
 class OffersLinks(scrapy.Spider):
     name = 'justjoinit'
     allowed_domains = ["justjoin.it"]
-    start_urls = ["https://justjoin.it/api/offers"]
-    x = input()
-    print(x)
+
+    def __init__(self):
+        self.start_urls = ["https://justjoin.it/api/offers"]
+        print("==========================================")
+        print("Please, configure scraper!")
+        print("==========================================")
+        pages_100_bool = input("Do you want to set the page limit to 100? [T/F]: \t") in {"T","True","TRUE","Y","yes","YES"}
+        if pages_100_bool == True:
+            self.pages_100 = 100
+        else:
+            self.pages_100 = 999999
+
+        localization_choice_bool = input("Do you want to scrap offers from all over Poland [T]? If not, press [F].: \t") \
+            in {"T","True","TRUE","yes","YES"}
+        if localization_choice_bool == True:
+            self.localization_choice = "ALL"
+        else:
+            self.localization_choice = input("Please type, Which city is interesting you: Warszawa, Kraków, \
+                Wrocław, Poznań, Trójmiasto, Białystok, Bielsko-Biała, \nBydgoszcz, Częstochowa, Gliwice, Katowice, Kielce,Lublin, Łódź, Olsztyn, Opole, Toruń, Rzeszów, Szczecin, Zielona Góra: \t")
+            if self.localization_choice not in {"Warszawa", "Kraków", "Wrocław", "Poznań", "Trójmiasto", \
+                "Białystok", "Bielsko-Biała", "Bydgoszcz", "Częstochowa", "Gliwice", "Katowice", "Kielce", "Lublin" , "Łódź", "Olsztyn", "Opole", "Toruń", "Rzeszów", "Szczecin", "Zielona Góra"}:
+                self.localization_choice = "ALL"
+                print("Wrong localization, scaper localization set to all cities!")
+
+        salary_expectations_bool = input("Are you only interested in offers with a given salary? [T/F]: \t") \
+            in {"T","True","TRUE","yes","YES"}
+        if salary_expectations_bool == True:
+            self.salary_expectations_lower = input("Please provide lower boundaries:: \t")
+            self.salary_expectations_upper = input("Please provide upper boundaries: \t")
+        
+        if (salary_expectations_bool == False) or \
+                (isinstance(self.salary_expectations_lower, (int, float, complex)) and not isinstance(self.salary_expectations_lower, bool) == False) or \
+                (isinstance(self.salary_expectations_upper, (int, float, complex)) and not isinstance(self.salary_expectations_upper, bool) == False):
+            self.salary_expectations_lower = 0
+            self.salary_expectations_upper = 1000000
 
     def start_requests(self):
         yield SeleniumRequest(
@@ -37,13 +69,34 @@ class OffersLinks(scrapy.Spider):
     def parse_links(self, response):
         html_data = response.xpath('//pre/text()').get()
         json_data = json.loads(html_data)
-        for i in json_data[0:10]:
-            offers_url = "https://justjoin.it/offers/" + i["id"]
-            yield SeleniumRequest(
-                url = offers_url, 
-                callback = self.parse_offers,
-                wait_time=10,
-                wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
+        pages_100_handler = 0
+        
+        for i in json_data:
+            if self.localization_choice == "ALL":
+                if pages_100_handler < self.pages_100:
+                    offers_url = "https://justjoin.it/offers/" + i["id"]
+                    pages_100_handler += 1
+                    yield SeleniumRequest(
+                        url = offers_url, 
+                        callback = self.parse_offers,
+                        wait_time=10,
+                        wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
+                else:
+                    break
+            else: 
+                if self.localization_choice == i["city"]:
+                    if pages_100_handler < self.pages_100:
+                        offers_url = "https://justjoin.it/offers/" + i["id"]
+                        pages_100_handler += 1
+                        yield SeleniumRequest(
+                            url = offers_url, 
+                            callback = self.parse_offers,
+                            wait_time=10,
+                            wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
+                    else:
+                        break
+
+
 
     def parse_offers(self, response):
         handler = DataHandler()
