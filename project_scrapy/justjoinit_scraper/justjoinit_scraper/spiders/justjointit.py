@@ -2,11 +2,12 @@
 import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy_selenium import SeleniumRequest
+from scrapy.utils.log import configure_logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import json
-import time
-
+import datetime
+import logging
 
 class DataHandler(scrapy.Item):
     adress_url_offer = scrapy.Field()
@@ -25,6 +26,14 @@ class DataHandler(scrapy.Item):
 class OffersLinks(scrapy.Spider):
     name = 'justjoinit'
     allowed_domains = ["justjoin.it"]
+    log_file_name = "logs/log_" + str(datetime.datetime.now()).replace(":","_").replace("-","_").replace(" ","_") + ".txt"
+
+    configure_logging(install_root_handler=False)
+    logging.basicConfig(
+        filename=log_file_name,
+        format='%(levelname)s: %(message)s',
+        level=logging.INFO
+    )
 
     def __init__(self):
         self.start_urls = ["https://justjoin.it/api/offers"]
@@ -42,9 +51,8 @@ class OffersLinks(scrapy.Spider):
         if localization_choice_bool == True:
             self.localization_choice = "ALL"
         else:
-            self.localization_choice = input("Please type, Which city is interesting you: Warszawa, Kraków, Wrocław, Poznań, Trójmiasto, Białystok, Bielsko-Biała, \nBydgoszcz, Częstochowa, Gliwice, Katowice, Kielce, Lublin, Łódź, Olsztyn, Opole, Toruń, Rzeszów, Szczecin, Zielona Góra: \t")
-            if self.localization_choice not in {"Warszawa", "Kraków", "Wrocław", "Poznań", "Trójmiasto", \
-                "Białystok", "Bielsko-Biała", "Bydgoszcz", "Częstochowa", "Gliwice", "Katowice", "Kielce", "Lublin" , "Łódź", "Olsztyn", "Opole", "Toruń", "Rzeszów", "Szczecin", "Zielona Góra"}:
+            self.localization_choice = input("Please type, Which city is interesting you: 'Berlin', 'Białystok', 'Bielsko-Biała', 'Billund', 'Bremen', 'Burbank', 'Bydgoszcz', 'Chicago', 'Chorzów', 'Culver City', 'Częstochowa', 'Dublin', 'Düsseldorf', 'Dąbrowa Górnicza', 'Gdańsk', 'Gdynia', 'Gliwice', 'Helsinki', 'Irvine', 'Katowice', 'Kielce', 'Kraków', 'Kroměříž', 'Kwidzyn', 'København', 'London', 'Londyn', 'Los Angeles', 'Los Gatos', 'Lublin', 'Lund/Stockholm', 'Luxembourgh', 'Malmo', 'Marki', 'Mediolan', 'Miami Beach', 'München', 'New York', 'Norymberga', 'Nowy Jork', 'Olsztyn', 'Opole', 'Ostrów Wielkopolski', 'Palo Alto', 'Paris', 'Pasadena', 'Portland', 'Poznań', 'Road Town', 'Rybnik', 'Rzeszów', 'Sadowa', 'San Francisco', 'Seattle', 'Singapore', 'Sopot', 'Swarzędz', 'Szczecin', 'Tczew', 'Toruń', 'Tychy', 'Unterföhring', 'Ustroń', 'Valetta', 'Warsaw', 'Warszawa', 'Wałbrzych', 'Wrocław', 'Zabierzów', 'Zielona Góra', 'Łódź', 'Świdnica', 'Краків': \t")
+            if self.localization_choice not in {'Berlin', 'Berlin ', 'Białystok', 'Bielsko-Biała', 'Billund', 'Bremen', 'Burbank', 'Bydgoszcz', 'Chicago', 'Chorzów', 'Culver City', 'Częstochowa', 'Dublin', 'Düsseldorf', 'Dąbrowa Górnicza', 'Gdańsk', 'Gdynia', 'Gliwice', 'Helsinki', 'Irvine', 'Katowice', 'Kielce', 'Kraków', 'Kroměříž', 'Kwidzyn', 'København', 'London', 'Londyn', 'Los Angeles', 'Los Gatos', 'Lublin', 'Lund/Stockholm', 'Luxembourgh', 'Malmo', 'Marki', 'Mediolan', 'Miami Beach', 'München', 'New York', 'Norymberga', 'Nowy Jork', 'Olsztyn', 'Opole', 'Ostrów Wielkopolski', 'Palo Alto', 'Paris', 'Pasadena', 'Portland', 'Poznań', 'Road Town', 'Rybnik', 'Rzeszów', 'Sadowa', 'San Francisco', 'Seattle', 'Singapore', 'Sopot', 'Swarzędz', 'Szczecin', 'Tczew', 'Toruń', 'Tychy', 'Unterföhring', 'Ustroń', 'Valetta', 'Warsaw', 'Warszawa', 'Wałbrzych', 'Wrocław', 'Zabierzów', 'Zielona Góra', 'Łódź', 'Świdnica', 'Краків'}:
                 self.localization_choice = "ALL"
                 print("Wrong localization, scaper localization set to all cities!")
 
@@ -99,8 +107,6 @@ class OffersLinks(scrapy.Spider):
                                     wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
                             else:
                                 break
-
-
 
     def parse_offers(self, response):
         handler = DataHandler()
