@@ -47,3 +47,28 @@ Let's scrape job offers from Łódź in the salary range [10000, 14000].
 
 Obtained file is available in the directory: "web_scraping/project_scrapy/justjoinit_scraper/justjoinit_scraper/example_limit100_lodz_10000_140000.csv". 
 
+### Project tree
+```bash
+└───justjoinit_scraper
+    │   requirements.txt
+    │   scrapy.cfg
+    │
+    └───justjoinit_scraper
+        │   debug.log
+        │   example_limit100_lodz_10000_140000.csv
+        │   items.py
+        │   middlewares.py
+        │   pipelines.py
+        │   settings.py
+        │   __init__.py
+        │
+        ├───logs
+        │       log_2020_04_11_20_52_48.526360.txt
+        │
+        ├───selenium_driver
+        │       chromedriver.exe
+        │
+        └──────spiders
+            │   justjointit.py
+            └───   __init__.py 
+```
