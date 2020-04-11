@@ -72,3 +72,7 @@ Obtained file is available in the directory: "web_scraping/project_scrapy/justjo
             │   justjointit.py
             └───   __init__.py 
 ```
+Differences in the project compared to the default Scrapy configuration:
+* added requirements.txt file (mentioned in the Requirements/Instalation)
+* added middlewares: scrapy-selenium (added selenium_driver/chromedriver.exe and changed settings.py - mentioned in the Requirements/Instalation) 
+* added logs (mentioned in the User manual)
