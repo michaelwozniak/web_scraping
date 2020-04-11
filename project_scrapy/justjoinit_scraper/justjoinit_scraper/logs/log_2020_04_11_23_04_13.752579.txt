@@ -1,0 +1,38 @@
+INFO: Scrapy 1.6.0 started (bot: justjoinit_scraper)
+INFO: Versions: lxml 4.5.0.0, libxml2 2.9.9, cssselect 1.1.0, parsel 1.5.2, w3lib 1.20.0, Twisted 19.10.0, Python 3.7.3 (default, Apr 24 2019, 15:29:51) [MSC v.1915 64 bit (AMD64)], pyOpenSSL 19.1.0 (OpenSSL 1.1.1e  17 Mar 2020), cryptography 2.8, Platform Windows-10-10.0.18362-SP0
+INFO: Overridden settings: {'BOT_NAME': 'justjoinit_scraper', 'FEED_FORMAT': 'csv', 'FEED_URI': 'test.csv', 'NEWSPIDER_MODULE': 'justjoinit_scraper.spiders', 'ROBOTSTXT_OBEY': True, 'SPIDER_MODULES': ['justjoinit_scraper.spiders']}
+INFO: Telnet Password: cefc61f3680eb467
+INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.feedexport.FeedExporter',
+ 'scrapy.extensions.logstats.LogStats']
+INFO: Received SIGINT, shutting down gracefully. Send again to force 
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+Traceback (most recent call last):
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\crawler.py", line 79, in crawl
+    self.spider = self._create_spider(*args, **kwargs)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\crawler.py", line 102, in _create_spider
+    return self.spidercls.from_crawler(self, *args, **kwargs)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\spiders\__init__.py", line 51, in from_crawler
+    spider = cls(*args, **kwargs)
+  File "C:\Users\wozni\Desktop\WS_MW\web_scraping\project_scrapy\justjoinit_scraper\justjoinit_scraper\spiders\justjointit.py", line 66, in __init__
+    pages_100_bool = input("Do you want to set the page limit to 100? [T/F]: \t") in {"T","True","TRUE","Y","yes","YES"}
+EOFError
+CRITICAL: 
+Traceback (most recent call last):
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\crawler.py", line 79, in crawl
+    self.spider = self._create_spider(*args, **kwargs)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\crawler.py", line 102, in _create_spider
+    return self.spidercls.from_crawler(self, *args, **kwargs)
+  File "c:\users\wozni\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\spiders\__init__.py", line 51, in from_crawler
+    spider = cls(*args, **kwargs)
+  File "C:\Users\wozni\Desktop\WS_MW\web_scraping\project_scrapy\justjoinit_scraper\justjoinit_scraper\spiders\justjointit.py", line 66, in __init__
+    pages_100_bool = input("Do you want to set the page limit to 100? [T/F]: \t") in {"T","True","TRUE","Y","yes","YES"}
+EOFError

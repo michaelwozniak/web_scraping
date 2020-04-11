@@ -96,7 +96,6 @@ DOWNLOADER_MIDDLEWARES = {
 
 from shutil import which
 
-SELENIUM_DRIVER_NAME = 'chrome'
-SELENIUM_DRIVER_EXECUTABLE_PATH = 'selenium_driver/chromedriver'
-SELENIUM_DRIVER_ARGUMENTS=['--headless']
-# '--headless'
+SELENIUM_DRIVER_NAME = 'chrome' #provide your driver name
+SELENIUM_DRIVER_EXECUTABLE_PATH = 'selenium_driver/chromedriver' #provide your driver exec path
+SELENIUM_DRIVER_ARGUMENTS=['--headless'] #remove "--headless" if you want use head mode
