@@ -1,6 +1,5 @@
 # -*- coding: utf8 -*-
 import scrapy
-from scrapy.crawler import CrawlerProcess
 from scrapy_selenium import SeleniumRequest
 from scrapy.utils.log import configure_logging
 from selenium.webdriver.common.by import By
@@ -8,6 +7,12 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import datetime
 import logging
+import re
+
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
 
 class DataHandler(scrapy.Item):
     adress_url_offer = scrapy.Field()
@@ -121,7 +126,7 @@ class OffersLinks(scrapy.Spider):
                 response.xpath("//div[@class='css-19mz16e']/text()").getall())]
         handler["if_company_page_exists"] = True if len(response.xpath("//a[@class='MuiTypography-root MuiLink-root MuiLink-underlineHover css-66z1rr MuiTypography-colorPrimary']")) != 0 else False
         handler["if_direct_apply_possible"] = True if len(response.xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-contained css-j75g8 MuiButton-containedPrimary']/span[@class='MuiButton-label' and 1]")) != 0 else False
-        handler["text_offert_description"] = response.xpath("//div[@class='css-gz8dae']/div/span").get()
+        handler["text_offert_description"] = cleanhtml(response.xpath("//div[@class='css-gz8dae']/div/span").get())
         handler["adress_url_offer"] = response.request.url
 
         yield handler
