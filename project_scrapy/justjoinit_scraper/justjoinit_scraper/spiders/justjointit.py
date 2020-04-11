@@ -111,7 +111,7 @@ class OffersLinks(scrapy.Spider):
         # Searching the offer space according to given parameters (100_pages, localization, salary range) by the user and collback to parse_offers method.
         ## Scraper always chooses only offers with a given salary.
         ## Logic of salary expectations conditions (sets) is directly taken from the webpage.
-        ### In the authors' opinion, it is a bit of a distortion, but to be consistent with the part of the project carried out at Selenium you had to use this logic.
+        ### In the authors' opinion, it is a bit of a distortion, but to be consistent with the part of the project carried out at Selenium we had to use this logic.
 
         for i in json_data:
             if type(i["salary_from"]) != type(None) and type(i["salary_to"]) != type(None):
