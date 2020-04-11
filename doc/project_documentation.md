@@ -6,7 +6,7 @@
 Root directory for scrapy project: "web_scraping/project_scrapy/justjoinit_scraper"
 
 ### Requirements/Instalation
-Run in console "pip install -r requirements" to install libraries:
+Run in the console "pip install -r requirements" to install libraries:
   * scrapy~=1.6.0
   * scrapy_selenium~=0.0.7
   * selenium~=3.141.0
@@ -21,3 +21,29 @@ Please also change code in "justjoinit_scraper/settings.py" file (lines: 99-100)
 SELENIUM_DRIVER_NAME = 'chrome'
 SELENIUM_DRIVER_EXECUTABLE_PATH = 'selenium_driver/chromedriver'
 ```
+
+### User manual
+0. Go to the directory: "web_scraping/project_scrapy/justjoinit_scraper/justjoinit_scraper/"
+1. Run in the console "scrapy crawl justjoinit -o filename.csv" to save scraping results in filename.csv (optionally use json). 
+2. Configure your scraper by answering on 3 questions about: 100_pages condition, localization and salary range. The answer method is described in detail in the program.
+3. Wait for the scraping to finish.
+4. Analyze filename.csv :) 
+5. Analyze logs from scraping in an adequate file from the "justjoinit_scraper/logs" folder.
+
+### Example
+Let's scrape job offers from Łódź in the salary range [10000, 14000].
+
+0. Go to the directory: "web_scraping/project_scrapy/justjoinit_scraper/justjoinit_scraper/"
+1. Run in the console "scrapy crawl justjoinit -o example_limit100_lodz_10000_140000.csv"
+2. Do you want to set the page limit to 100? [T/F]: **T**
+3. Do you want to scrap offers from all over Poland [T]? If not, press [F].: **F**
+4. Please type, Which city are you interested in: 'Berlin', 'Białystok', 'Bielsko-Biała', 'Billund', 'Bremen', 'Burbank', 'Bydgoszcz', 'Chicago', 'Chorzów', 'Culver City', 'Częstochowa', 'Dublin', 'Düsseldorf', 'Dąbrowa Górnicza', 'Gdańsk', 'Gdynia', 'Gliwice', 'Helsinki', 'Irvine', 'Katowice', 'Kielce', 'Kraków', 'Kroměříž', 'Kwidzyn', 'København', 'London', 'Londyn', 'Los Angeles', 'Los Gatos', 'Lublin', 'Lund/Stockholm', 'Luxembourgh', 'Malmo', 'Marki', 'Mediolan', 'Miami Beach', 'München', 'New York', 'Norymberga', 'Nowy Jork', 'Olsztyn', 'Opole', 'Ostrów Wielkopolski', 'Palo Alto', 'Paris', 'Pasadena', 'Portland', 'Poznań', 'Road Town', 'Rybnik', 'Rzeszów', 'Sadowa', 'San Francisco', 'Seattle', 'Singapore', 'Sopot', 'Swarzędz', 'Szczecin', 'Tczew', 'Toruń', 'Tychy', 'Unterföhring', 'Ustroń', 'Valetta', 'Warsaw', 'Warszawa', 'Wałbrzych', 'Wrocław', 'Zabierzów', 'Zielona Góra', 'Łódź', 'Świdnica', 'Краків': **Łódź**
+5. Do you want to provide boundaries of salary (logical alternative) [T/F]: **T**
+6. Please provide lower boundaries:: **10000**
+7. Please provide upper boundaries: **14000**
+8. Wait for the scraping to finish.
+9. Analyze "justjoinit_scraper/example_limit100_lodz_10000_140000.csv".
+5. Analyze logs from scraping in an adequate file from the "justjoinit_scraper/logs" folder.
+
+Obtained file is available in the directory: "web_scraping/project_scrapy/justjoinit_scraper/justjoinit_scraper/example_limit100_lodz_10000_140000.csv". 
+
