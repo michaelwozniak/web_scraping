@@ -15,6 +15,7 @@ SPIDER_MODULES = ['justjoinit_scraper.spiders']
 NEWSPIDER_MODULE = 'justjoinit_scraper.spiders'
 
 
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'justjoinit_scraper (+http://www.yourdomain.com)'
 
@@ -56,6 +57,10 @@ ROBOTSTXT_OBEY = True
 #    'justjoinit_scraper.middlewares.JustjoinitScraperDownloaderMiddleware': 543,
 #}
 
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_selenium.SeleniumMiddleware': 800
+}
+
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -88,3 +93,10 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+from shutil import which
+
+SELENIUM_DRIVER_NAME = 'chrome'
+SELENIUM_DRIVER_EXECUTABLE_PATH = 'selenium_driver/chromedriver'
+SELENIUM_DRIVER_ARGUMENTS=[]
+# '--headless'
