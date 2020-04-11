@@ -1,10 +1,12 @@
 # -*- coding: utf8 -*-
 import scrapy
+from scrapy.crawler import CrawlerProcess
 from scrapy_selenium import SeleniumRequest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import json
 import time
+
 
 class DataHandler(scrapy.Item):
     adress_url_offer = scrapy.Field()
@@ -40,18 +42,17 @@ class OffersLinks(scrapy.Spider):
         if localization_choice_bool == True:
             self.localization_choice = "ALL"
         else:
-            self.localization_choice = input("Please type, Which city is interesting you: Warszawa, Kraków, \
-                Wrocław, Poznań, Trójmiasto, Białystok, Bielsko-Biała, \nBydgoszcz, Częstochowa, Gliwice, Katowice, Kielce,Lublin, Łódź, Olsztyn, Opole, Toruń, Rzeszów, Szczecin, Zielona Góra: \t")
+            self.localization_choice = input("Please type, Which city is interesting you: Warszawa, Kraków, Wrocław, Poznań, Trójmiasto, Białystok, Bielsko-Biała, \nBydgoszcz, Częstochowa, Gliwice, Katowice, Kielce, Lublin, Łódź, Olsztyn, Opole, Toruń, Rzeszów, Szczecin, Zielona Góra: \t")
             if self.localization_choice not in {"Warszawa", "Kraków", "Wrocław", "Poznań", "Trójmiasto", \
                 "Białystok", "Bielsko-Biała", "Bydgoszcz", "Częstochowa", "Gliwice", "Katowice", "Kielce", "Lublin" , "Łódź", "Olsztyn", "Opole", "Toruń", "Rzeszów", "Szczecin", "Zielona Góra"}:
                 self.localization_choice = "ALL"
                 print("Wrong localization, scaper localization set to all cities!")
 
-        salary_expectations_bool = input("Are you only interested in offers with a given salary? [T/F]: \t") \
+        salary_expectations_bool = input("Do you want to provide boundaries of salary (logical alternative) [T/F]: \t") \
             in {"T","True","TRUE","yes","YES"}
         if salary_expectations_bool == True:
-            self.salary_expectations_lower = input("Please provide lower boundaries:: \t")
-            self.salary_expectations_upper = input("Please provide upper boundaries: \t")
+            self.salary_expectations_lower = int(input("Please provide lower boundaries:: \t"))
+            self.salary_expectations_upper = int(input("Please provide upper boundaries: \t"))
         
         if (salary_expectations_bool == False) or \
                 (isinstance(self.salary_expectations_lower, (int, float, complex)) and not isinstance(self.salary_expectations_lower, bool) == False) or \
@@ -72,29 +73,32 @@ class OffersLinks(scrapy.Spider):
         pages_100_handler = 0
         
         for i in json_data:
-            if self.localization_choice == "ALL":
-                if pages_100_handler < self.pages_100:
-                    offers_url = "https://justjoin.it/offers/" + i["id"]
-                    pages_100_handler += 1
-                    yield SeleniumRequest(
-                        url = offers_url, 
-                        callback = self.parse_offers,
-                        wait_time=10,
-                        wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
-                else:
-                    break
-            else: 
-                if self.localization_choice == i["city"]:
-                    if pages_100_handler < self.pages_100:
-                        offers_url = "https://justjoin.it/offers/" + i["id"]
-                        pages_100_handler += 1
-                        yield SeleniumRequest(
-                            url = offers_url, 
-                            callback = self.parse_offers,
-                            wait_time=10,
-                            wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
-                    else:
-                        break
+            if type(i["salary_from"]) != type(None) and type(i["salary_to"]) != type(None):
+                if self.localization_choice == "ALL":
+                    if (self.salary_expectations_lower <= int(i["salary_from"]) and int(i["salary_from"])<=self.salary_expectations_upper) or (self.salary_expectations_upper >= int(i["salary_to"]) and int(i["salary_to"]) >=self.salary_expectations_lower) or (i["salary_to"]>self.salary_expectations_upper and (i["salary_from"]<self.salary_expectations_lower)):
+                        if pages_100_handler < self.pages_100:
+                            offers_url = "https://justjoin.it/offers/" + i["id"]
+                            pages_100_handler += 1
+                            yield SeleniumRequest(
+                                url = offers_url, 
+                                callback = self.parse_offers,
+                                wait_time=10,
+                                wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
+                        else:
+                            break
+                else: 
+                    if self.localization_choice == i["city"]:
+                        if (self.salary_expectations_lower <= int(i["salary_from"]) and int(i["salary_from"])<=self.salary_expectations_upper) or (self.salary_expectations_upper >= int(i["salary_to"]) and int(i["salary_to"]) >=self.salary_expectations_lower) or (i["salary_to"]>self.salary_expectations_upper and (i["salary_from"]<self.salary_expectations_lower)):
+                            if pages_100_handler < self.pages_100:
+                                offers_url = "https://justjoin.it/offers/" + i["id"]
+                                pages_100_handler += 1
+                                yield SeleniumRequest(
+                                    url = offers_url, 
+                                    callback = self.parse_offers,
+                                    wait_time=10,
+                                    wait_until=EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.css-1xc9aks')))
+                            else:
+                                break
 
 
 
