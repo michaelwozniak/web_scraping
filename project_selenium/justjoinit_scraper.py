@@ -33,6 +33,19 @@ class Scraper():
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
 
+        """Constructor - declaration of scraper configuration"""
+        print("==========================================")
+        print("Please, configure scraper!")
+        print("==========================================")
+
+        # Page limit handling
+        pages_100_bool = input("Do you want to set the page limit to 100? [T/F]: \t") in {"T","True","TRUE","Y","yes","YES"}
+        if pages_100_bool == True:
+            self.number = 100
+        else:
+            self.number = 999999
+        
+
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
         element.click()
         
@@ -91,40 +104,61 @@ class Scraper():
         element.click()
 
     def offers(self):
-        if(self.pages_100 == True):
-            number = 100
-        else:
-            ## 5 losowo napisałem, moze niech uzytkownik wprowadzi inuptem?
-            number = 5
         
         links = []
         actions = ActionChains(self.driver)
 
         ## dodać warunek na sytuację, gdy jest mniej niż 100 ofert na stronie!
-        while(len(links)<number):
+
+        while(len(links) < self.number):
             elements = self.driver.find_elements_by_css_selector("a.css-18rtd1e")
 
+
+            check_before = len(links)
+            print("1: ", check_before)
+            # counter = 0
             for element in elements:
                 link = element.get_attribute("href")
                 if(link in links):
+                    # counter += 1
+                    # if(counter == len(elements)):
+                    #     break
+                    # else:
                     continue
                 else:
                     links.append(link)
-                    if (len(links)>=number):
+                    if (len(links)>= self.number):
                         break
+
+            check_after = len(links)
+            print("2: ", check_after)
+            
+
 
             elements[-1].send_keys(Keys.PAGE_DOWN)
             time.sleep(5)
+            
+            if check_before == check_after:
+                break
+            else:
+                continue
+
+
+
+
+
+
         
         return links
     
     def __del__(self):
         self.driver.quit()
         
+if __name__ == '__main__':
 
-c = Scraper(headless_mode = False, pages_100 = False, choose_location = True, choose_salary = True)
+    c = Scraper(headless_mode = False, choose_location = True, choose_salary = True)
 
-links = c.offers()
-for link in links:
-    print(link)
-c.__del__()
+    links = c.offers()
+    for link in links:
+        print(link)
+    c.__del__()
