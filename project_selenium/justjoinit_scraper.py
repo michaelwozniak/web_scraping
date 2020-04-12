@@ -1,4 +1,3 @@
-#### DODAC TABS WITH SALARY W KAZDEJ FUNKCJI
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
@@ -36,11 +35,13 @@ class Scraper():
 
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
         element.click()
+        
+        if choose_salary == True:
+            self.salary()
 
         if choose_location == True:
             self.location()
-        if choose_salary == True:
-            self.salary()
+
 
 
 
@@ -69,7 +70,7 @@ class Scraper():
         # self.driver.find_element_by_xpath('//button/span[text() = "More filters"]').click()
         
         ##### PROBLEM TUTAJ ####
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@tabindex="0"]')))
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[text() = "More filters"]')))
         element.click()
 
         # user inputs
