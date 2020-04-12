@@ -34,10 +34,15 @@ class Scraper():
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
 
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
+        element.click()
+
         if choose_location == True:
             self.location()
         if choose_salary == True:
             self.salary()
+
+
 
 
     def location(self):
@@ -58,26 +63,29 @@ class Scraper():
             element.click()
 
     def salary(self):
-        # sometimes window 'sign in' covers 'more filters'
-        ## BLAD TU WYSKAKUJE
-
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
+        # element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span.css-1fptokh')))
+        
+        # element = self.driver.find_elements_by_css_selector("#root > div.css-gwbava > div > div.css-1myb1t6 > button > span.MuiButton-label > span.css-1fptokh")
+        # self.driver.find_element_by_xpath('//button/span[text() = "More filters"]').click()
+        
+        ##### PROBLEM TUTAJ ####
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@tabindex="0"]')))
         element.click()
 
-        time.sleep(10)
         # user inputs
         min_salary = int(input('Choose minimum salary expectations:\n'))
         max_salary = int(input('Choose maximum salary expectations:\n'))
+
         en =  self.driver.find_element_by_xpath('//span[@class="MuiSlider-thumb MuiSlider-thumbColorSecondary"][@data-index="0"]')
-        move1 = ActionChains(self.driver)
         # swipe horizontal slider due to user input (left-hand edge)
-        move1.click_and_hold(en).move_by_offset(11 * min_salary / 1000, 0).release().perform()
-        time.sleep(30)
+        move_left = ActionChains(self.driver)
+        move_left.click_and_hold(en).move_by_offset(11 * min_salary / 1000, 0).release().perform()
+
         en =  self.driver.find_element_by_xpath('//span[@class="MuiSlider-thumb MuiSlider-thumbColorSecondary"][@data-index="1"]')
-        move2 = ActionChains(self.driver)
         # swipe horizontal slider due to user input (right-hand edge)
-        move2.click_and_hold(en).move_by_offset(11 * (max_salary - 50000) / 1000, 0).release().perform()
-        time.sleep(30)    
+        move_right = ActionChains(self.driver)
+        move_right.click_and_hold(en).move_by_offset(11 * (max_salary - 50000) / 1000, 0).release().perform()
+
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Show offers"]')))
         element.click()
 
@@ -113,7 +121,7 @@ class Scraper():
         self.driver.quit()
         
 
-c = Scraper(headless_mode = True, pages_100 = False, choose_location = True, choose_salary = False)
+c = Scraper(headless_mode = False, pages_100 = False, choose_location = True, choose_salary = True)
 
 links = c.offers()
 for link in links:
