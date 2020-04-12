@@ -16,10 +16,7 @@ import matplotlib.pyplot as plt
 class Scraper():
 
     # declaring options
-    def __init__(self, headless_mode = True, pages_100 = True, choose_location = False, choose_salary = False):
-        self.pages_100 = pages_100
-        self.choose_location = choose_location
-        self.choose_salary = choose_salary
+    def __init__(self, headless_mode = True, choose_location = False, choose_salary = False):
         self.headless_mode = headless_mode
 
         # path of geckodriver
@@ -49,10 +46,17 @@ class Scraper():
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
         element.click()
         
-        if choose_salary == True:
+        # Salary choice handling
+        salary_expectations_bool = input("Do you want to provide boundaries of salary (logical alternative) [T/F]: \t") \
+            in {"T","True","TRUE","Y","yes","YES"}
+
+        if salary_expectations_bool == True:
             self.salary()
 
-        if choose_location == True:
+        # Localization choice handling
+        self.localization_choice_bool = input("Do you want to choose location of offer?: \t") \
+            in {"T","True","TRUE",'Y',"yes","YES"}
+        if self.localization_choice_bool == True:
             self.location()
 
 
@@ -64,12 +68,11 @@ class Scraper():
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
         element.click()
         
-
         # user input
-        choose_location = input('Choose location (in Polish):\n')
-        ## dodać wszystkie miasta
-        if (choose_location in ['Warszawa', 'Kraków', 'Wrocław', 'Poznań', 'Trójmiasto']):
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{choose_location}"]')))
+        self.choose_location = input("Please type, Which city are you interested in?: 'Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź': \t")
+
+        if (self.choose_location in ['Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź']):
+            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{self.choose_location}"]')))
             element.click()
         else: 
             print('There is no such location. You will have offers with all possibile cities.')
@@ -77,6 +80,7 @@ class Scraper():
             element.click()
 
     def salary(self):
+        
 
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[text() = "More filters"]')))
         element.click()
@@ -102,27 +106,44 @@ class Scraper():
         
         # crating list of links of offers to further scraping
         links = []
-        actions = ActionChains(self.driver)
 
         # while loop to reach destined number of pages
         while(len(links) < self.number):
             elements = self.driver.find_elements_by_css_selector("a.css-18rtd1e")
+            locations = self.driver.find_elements_by_xpath("//div[@class='css-1ihx907']")
 
             # checking length of links before loop
             check_before = len(links)
 
-            # for loop for elements
-            for element in elements:
-                link = element.get_attribute("href")
-                # if link exists in list of links - continue
-                if(link in links):
-                    continue
-                else:
-                    # append links
-                    links.append(link)
-                    # if length of links is >= predefined number of pages - break
-                    if (len(links)>= self.number):
+            # for loop for elements and location
+            for element, location in zip(elements, locations):
+                if (self.localization_choice_bool == True and self.choose_location in ['Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź']):
+                    # solving problem with displaying offers for other cities
+                    if(location.text == self.choose_location):
+                        link = element.get_attribute("href")
+                        # if link exists in list of links - continue
+                        if(link in links):
+                            continue
+                        else:
+                            # append links
+                            links.append(link)
+                            # if length of links is >= predefined number of pages - break
+                            if (len(links)>= self.number):
+                                break
+                    else:
                         break
+                else:
+
+                    link = element.get_attribute("href")
+                    # if link exists in list of links - continue
+                    if(link in links):
+                        continue
+                    else:
+                        # append links
+                        links.append(link)
+                        # if length of links is >= predefined number of pages - break
+                        if (len(links)>= self.number):
+                            break
 
             # checking length of links after loop
             check_after = len(links)
@@ -146,7 +167,7 @@ class Scraper():
         
 if __name__ == '__main__':
 
-    c = Scraper(headless_mode = False, choose_location = True, choose_salary = True)
+    c = Scraper(headless_mode = True)
 
     links = c.offers()
     for link in links:
