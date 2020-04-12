@@ -17,9 +17,8 @@ import matplotlib.pyplot as plt
 class Scraper():
 
     # declaring options
-    def __init__(self, headless_mode = True, pages_100 = True, login = False, choose_location = False, choose_salary = False):
+    def __init__(self, headless_mode = True, pages_100 = True, choose_location = False, choose_salary = False):
         self.pages_100 = pages_100
-        self.login = login
         self.choose_location = choose_location
         self.choose_salary = choose_salary
         self.headless_mode = headless_mode
@@ -34,52 +33,18 @@ class Scraper():
             options.headless = False
         self.driver = webdriver.Firefox(options = options, executable_path = gecko_path)
         self.driver.get(url)
-        if login == True:
-            self.log_in()
+
         if choose_location == True:
             self.location()
         if choose_salary == True:
             self.salary()
 
-    def log_in(self):
-        # sign in -> sign in as developer
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button/span[@class='MuiFab-label'][text()='Sign in']")))
-        element.click()
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text()="Sign in as Developer"]')))
-        element.click()
-        
-        # user inputs
-        username = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@name="email"]')))
-        my_email = input('Please provide your email:')
-        username.send_keys(my_email)
-        
-        password = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//input[@name="password"]')))
-        my_pass = getpass.getpass('Please provide your password:')
-        password.send_keys(my_pass)
-        
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[@class="MuiFab-label"][text()="Sign in"]')))
-        element.click()
 
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="css-mudjgk"][text()="Job offers"]')))
-        element.click()
-
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
-        element.click()
-
-    
     def location(self):
-        if self.login == True:
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
-            element.click()
-        else:
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="css-mudjgk"][text()="Job offers"]')))
-            element.click()
-
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="css-son5n9"][text() = "offers with salary"]')))
-            element.click()
-
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
-            element.click()
+        
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
+        element.click()
+        
 
         # user input
         choose_location = input('Choose location (in Polish):\n')
@@ -95,14 +60,9 @@ class Scraper():
     def salary(self):
         # sometimes window 'sign in' covers 'more filters'
         ## BLAD TU WYSKAKUJE
-        try:
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
-            element.click()
-        except:
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[@class="MuiButtonBase-root MuiFab-root css-t8t650 MuiFab-extended MuiFab-sizeMedium MuiFab-secondary"][text()="Sign in"]')))
-            element.click()
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
-            element.click()
+
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/span[text() = "More filters"]')))
+        element.click()
 
         time.sleep(10)
         # user inputs
@@ -153,7 +113,7 @@ class Scraper():
         self.driver.quit()
         
 
-c = Scraper(headless_mode = True, pages_100 = False, login = False, choose_location = False, choose_salary = True)
+c = Scraper(headless_mode = True, pages_100 = False, choose_location = True, choose_salary = False)
 
 links = c.offers()
 for link in links:
