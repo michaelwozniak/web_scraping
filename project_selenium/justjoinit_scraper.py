@@ -72,17 +72,12 @@ class Scraper():
             element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{choose_location}"]')))
             element.click()
         else: 
-            print('There is no such location. Offers with all possibilities.')
+            print('There is no such location. You will have offers with all possibile cities.')
             element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="MuiButtonBase-root MuiIconButton-root css-tze5xj"]')))
             element.click()
 
     def salary(self):
-        # element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span.css-1fptokh')))
-        
-        # element = self.driver.find_elements_by_css_selector("#root > div.css-gwbava > div > div.css-1myb1t6 > button > span.MuiButton-label > span.css-1fptokh")
-        # self.driver.find_element_by_xpath('//button/span[text() = "More filters"]').click()
-        
-        ##### PROBLEM TUTAJ ####
+
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[text() = "More filters"]')))
         element.click()
 
@@ -105,52 +100,47 @@ class Scraper():
 
     def offers(self):
         
+        # crating list of links of offers to further scraping
         links = []
         actions = ActionChains(self.driver)
 
-        ## dodać warunek na sytuację, gdy jest mniej niż 100 ofert na stronie!
-
+        # while loop to reach destined number of pages
         while(len(links) < self.number):
             elements = self.driver.find_elements_by_css_selector("a.css-18rtd1e")
 
-
+            # checking length of links before loop
             check_before = len(links)
-            print("1: ", check_before)
-            # counter = 0
+
+            # for loop for elements
             for element in elements:
                 link = element.get_attribute("href")
+                # if link exists in list of links - continue
                 if(link in links):
-                    # counter += 1
-                    # if(counter == len(elements)):
-                    #     break
-                    # else:
                     continue
                 else:
+                    # append links
                     links.append(link)
+                    # if length of links is >= predefined number of pages - break
                     if (len(links)>= self.number):
                         break
 
+            # checking length of links after loop
             check_after = len(links)
-            print("2: ", check_after)
-            
 
-
+            # press 'Page Down' key to get next list of offers
             elements[-1].send_keys(Keys.PAGE_DOWN)
             time.sleep(5)
             
+            # if length of links after loop and before loop are the same - bottom of the page - break the loop
+            # if not - continue
             if check_before == check_after:
                 break
             else:
                 continue
 
-
-
-
-
-
-        
         return links
     
+    # Destructor
     def __del__(self):
         self.driver.quit()
         
