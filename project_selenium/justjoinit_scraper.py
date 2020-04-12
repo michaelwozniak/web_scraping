@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 class Scraper():
 
     # declaring options
-    def __init__(self, headless_mode = True, choose_location = False, choose_salary = False):
+    def __init__(self, headless_mode = True):
         self.headless_mode = headless_mode
 
         # path of geckodriver
