@@ -15,7 +15,7 @@ Please also change code in "justjoinit_scraper.py" file (lines: 36, 38 and 43).
 
 ### User manual
 0. Go to the directory: "web_scraping/project_selenium/"
-1. Default option for driver is headless mode. You can change it in __init__.
+1. Default option for driver is headless mode. You can change it in '__init__'.
 2. Run in the console "python justjoinit.py" to save scraping results in filename.csv. 
 3. Configure your scraper by answering on 3 questions about: 100_pages condition, salary range and location. The answer method is described in detail in the program.
 4. Wait for the scraping to finish.
