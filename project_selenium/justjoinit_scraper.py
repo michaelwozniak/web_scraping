@@ -180,7 +180,7 @@ class Scraper():
         
 if __name__ == '__main__':
 
-    c = Scraper(headless_mode = True)
+    c = Scraper()
 
     links = c.offers()
     for link in links:
