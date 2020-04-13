@@ -15,6 +15,19 @@ import logging #library for logging
 
 class Scraper():
 
+    
+    log_file_name = "logs/log_" + str(datetime.datetime.now()).replace(":","_").replace("-","_").replace(" ","_") + ".txt" #name for log file
+
+
+    logging.basicConfig(
+        filename=log_file_name,
+        format='%(levelname)s: %(message)s',
+        level=logging.INFO
+    ) # logging configuration; logs are available in logs folder
+
+    logger=logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
     # declaring options
     def __init__(self, headless_mode = True):
         self.headless_mode = headless_mode
