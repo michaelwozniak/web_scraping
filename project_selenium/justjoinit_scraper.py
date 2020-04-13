@@ -1,16 +1,16 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys #selenium features for keys from keyboard
+from selenium.webdriver import ActionChains #selenium features for mouse movements
+from selenium.webdriver.common.by import By #selenium features By
+from selenium.webdriver.support.ui import WebDriverWait #selenium features for waiting
+from selenium.webdriver.support import expected_conditions as EC #selenium features for waiting
 import time
-import getpass
 import datetime
 import os
 from os import path
 import pandas as pd
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt #plots
+import logging #library for logging
 
 
 class Scraper():
