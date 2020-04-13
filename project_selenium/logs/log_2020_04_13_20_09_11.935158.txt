@@ -1,0 +1,40 @@
+DEBUG: POST http://127.0.0.1:64607/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}
+DEBUG: Starting new HTTP connection (1): 127.0.0.1:64607
+DEBUG: http://127.0.0.1:64607 "POST /session HTTP/1.1" 200 719
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/url {"url": "https://justjoin.it/"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/url HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element {"using": "xpath", "value": "//div[@class=\"css-son5n9\"][text() = \"offers with salary\"]"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element/20650ea0-d9cd-42b6-aaa4-32de94b067c7/click {"id": "20650ea0-d9cd-42b6-aaa4-32de94b067c7"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element/20650ea0-d9cd-42b6-aaa4-32de94b067c7/click HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element {"using": "xpath", "value": "//span[text() = \"More filters\"]"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element/0ef871bd-3145-4c6f-8f5c-eac3151663ca/click {"id": "0ef871bd-3145-4c6f-8f5c-eac3151663ca"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element/0ef871bd-3145-4c6f-8f5c-eac3151663ca/click HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element {"using": "xpath", "value": "//span[@class=\"MuiSlider-thumb MuiSlider-thumbColorSecondary\"][@data-index=\"0\"]"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/actions {"actions": [{"type": "pointer", "parameters": {"pointerType": "mouse"}, "id": "mouse", "actions": [{"type": "pointerMove", "duration": 250, "x": 0, "y": 0, "origin": {"element-6066-11e4-a52e-4f735466cecf": "15aad6e2-4bd8-4c51-9d49-de4f7fed7043"}}, {"type": "pointerDown", "duration": 0, "button": 0}, {"type": "pointerMove", "duration": 250, "x": 165, "y": 0, "origin": "pointer"}, {"type": "pointerUp", "duration": 0, "button": 0}]}, {"type": "key", "id": "key", "actions": [{"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}]}]}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/actions HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element {"using": "xpath", "value": "//span[@class=\"MuiSlider-thumb MuiSlider-thumbColorSecondary\"][@data-index=\"1\"]"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/actions {"actions": [{"type": "pointer", "parameters": {"pointerType": "mouse"}, "id": "mouse", "actions": [{"type": "pointerMove", "duration": 250, "x": 0, "y": 0, "origin": {"element-6066-11e4-a52e-4f735466cecf": "9d3f8541-40b3-48af-9956-9007ca815ca1"}}, {"type": "pointerDown", "duration": 0, "button": 0}, {"type": "pointerMove", "duration": 250, "x": -165, "y": 0, "origin": "pointer"}, {"type": "pointerUp", "duration": 0, "button": 0}]}, {"type": "key", "id": "key", "actions": [{"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}]}]}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/actions HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element {"using": "xpath", "value": "//span[@class=\"MuiButton-label\"][text() = \"Show offers\"]"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783/element/c53ded18-544b-4d67-8388-9549da992016/click {"id": "c53ded18-544b-4d67-8388-9549da992016"}
+DEBUG: http://127.0.0.1:64607 "POST /session/c6a3c103d120bf3576d4305d41c0d783/element/c53ded18-544b-4d67-8388-9549da992016/click HTTP/1.1" 400 1360
+DEBUG: Finished Request
+DEBUG: DELETE http://127.0.0.1:64607/session/c6a3c103d120bf3576d4305d41c0d783 {}
+DEBUG: http://127.0.0.1:64607 "DELETE /session/c6a3c103d120bf3576d4305d41c0d783 HTTP/1.1" 200 14
+DEBUG: Finished Request

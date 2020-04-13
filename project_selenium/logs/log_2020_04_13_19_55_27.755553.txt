@@ -1,0 +1,4 @@
+DEBUG: POST http://127.0.0.1:64068/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}
+DEBUG: Starting new HTTP connection (1): 127.0.0.1:64068
+DEBUG: http://127.0.0.1:64068 "POST /session HTTP/1.1" 500 988
+DEBUG: Finished Request

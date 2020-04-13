@@ -1,0 +1,19 @@
+DEBUG: POST http://127.0.0.1:65019/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--disable-gpu"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--disable-gpu"]}}}
+DEBUG: Starting new HTTP connection (1): 127.0.0.1:65019
+DEBUG: http://127.0.0.1:65019 "POST /session HTTP/1.1" 200 719
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:65019/session/7e9b05823783493dc8fd7cbdac7f0701/url {"url": "https://justjoin.it/"}
+DEBUG: http://127.0.0.1:65019 "POST /session/7e9b05823783493dc8fd7cbdac7f0701/url HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:65019/session/7e9b05823783493dc8fd7cbdac7f0701/element {"using": "xpath", "value": "//div[@class=\"css-son5n9\"][text() = \"offers with salary\"]"}
+DEBUG: http://127.0.0.1:65019 "POST /session/7e9b05823783493dc8fd7cbdac7f0701/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:65019/session/7e9b05823783493dc8fd7cbdac7f0701/element/cdedf672-0fad-41e4-a9ca-67d026baf042/click {"id": "cdedf672-0fad-41e4-a9ca-67d026baf042"}
+DEBUG: http://127.0.0.1:65019 "POST /session/7e9b05823783493dc8fd7cbdac7f0701/element/cdedf672-0fad-41e4-a9ca-67d026baf042/click HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:65019/session/7e9b05823783493dc8fd7cbdac7f0701/elements {"using": "css selector", "value": "a.css-18rtd1e"}
+DEBUG: http://127.0.0.1:65019 "POST /session/7e9b05823783493dc8fd7cbdac7f0701/elements HTTP/1.1" 200 12
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:65019/session/7e9b05823783493dc8fd7cbdac7f0701/elements {"using": "xpath", "value": "//div[@class='css-1ihx907']"}
+DEBUG: http://127.0.0.1:65019 "POST /session/7e9b05823783493dc8fd7cbdac7f0701/elements HTTP/1.1" 200 564
+DEBUG: Finished Request

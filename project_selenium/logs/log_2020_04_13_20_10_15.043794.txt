@@ -1,0 +1,40 @@
+DEBUG: POST http://127.0.0.1:64649/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--disable-gpu", "--headless"]}}}
+DEBUG: Starting new HTTP connection (1): 127.0.0.1:64649
+DEBUG: http://127.0.0.1:64649 "POST /session HTTP/1.1" 200 719
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/url {"url": "https://justjoin.it/"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/url HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element {"using": "xpath", "value": "//div[@class=\"css-son5n9\"][text() = \"offers with salary\"]"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element/34a508d7-a3c8-4006-a16e-a8d2ded95279/click {"id": "34a508d7-a3c8-4006-a16e-a8d2ded95279"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element/34a508d7-a3c8-4006-a16e-a8d2ded95279/click HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element {"using": "xpath", "value": "//span[text() = \"More filters\"]"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element/25c0d9d4-6ba2-4dc0-ab3a-2295166ceef7/click {"id": "25c0d9d4-6ba2-4dc0-ab3a-2295166ceef7"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element/25c0d9d4-6ba2-4dc0-ab3a-2295166ceef7/click HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element {"using": "xpath", "value": "//span[@class=\"MuiSlider-thumb MuiSlider-thumbColorSecondary\"][@data-index=\"0\"]"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/actions {"actions": [{"type": "pointer", "parameters": {"pointerType": "mouse"}, "id": "mouse", "actions": [{"type": "pointerMove", "duration": 250, "x": 0, "y": 0, "origin": {"element-6066-11e4-a52e-4f735466cecf": "0cca4741-0992-4edb-9de7-fdef6af8b032"}}, {"type": "pointerDown", "duration": 0, "button": 0}, {"type": "pointerMove", "duration": 250, "x": 165, "y": 0, "origin": "pointer"}, {"type": "pointerUp", "duration": 0, "button": 0}]}, {"type": "key", "id": "key", "actions": [{"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}]}]}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/actions HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element {"using": "xpath", "value": "//span[@class=\"MuiSlider-thumb MuiSlider-thumbColorSecondary\"][@data-index=\"1\"]"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/actions {"actions": [{"type": "pointer", "parameters": {"pointerType": "mouse"}, "id": "mouse", "actions": [{"type": "pointerMove", "duration": 250, "x": 0, "y": 0, "origin": {"element-6066-11e4-a52e-4f735466cecf": "eff85d9c-e071-469d-adf8-ca030ac887c7"}}, {"type": "pointerDown", "duration": 0, "button": 0}, {"type": "pointerMove", "duration": 250, "x": -165, "y": 0, "origin": "pointer"}, {"type": "pointerUp", "duration": 0, "button": 0}]}, {"type": "key", "id": "key", "actions": [{"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}, {"type": "pause", "duration": 0}]}]}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/actions HTTP/1.1" 200 14
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element {"using": "xpath", "value": "//span[@class=\"MuiButton-label\"][text() = \"Show offers\"]"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element HTTP/1.1" 200 88
+DEBUG: Finished Request
+DEBUG: POST http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b/element/f9928a3c-e073-485a-b35c-ca7825d8e57e/click {"id": "f9928a3c-e073-485a-b35c-ca7825d8e57e"}
+DEBUG: http://127.0.0.1:64649 "POST /session/fed96c494197662436c050bcae6e725b/element/f9928a3c-e073-485a-b35c-ca7825d8e57e/click HTTP/1.1" 400 1360
+DEBUG: Finished Request
+DEBUG: DELETE http://127.0.0.1:64649/session/fed96c494197662436c050bcae6e725b {}
+DEBUG: http://127.0.0.1:64649 "DELETE /session/fed96c494197662436c050bcae6e725b HTTP/1.1" 200 14
+DEBUG: Finished Request
