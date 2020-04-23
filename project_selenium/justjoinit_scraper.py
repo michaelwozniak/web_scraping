@@ -190,8 +190,10 @@ class Scraper():
 
     def link_opener(self):
         
+        #Call offers method to fetch url links to filtered offers.
         links = self.offers()
         
+        #Create placeholders for output
         offer_link_list=[]
         offer_title_list=[]
         company_name_list=[]
@@ -205,10 +207,13 @@ class Scraper():
         direct_apply_list=[]
         offer_description_list=[]
         
+        #Iterate through each offer link.
         for link in links:
+            #Call driver to open a given url.
             self.driver.get(link)
-            #WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//span[@class='css-1v15eia']")))
             
+
+            #Scrape appropreiate items from oppened site.
             offer_link = link
             offer_title = self.driver.find_element_by_xpath("//span[@class='css-1v15eia']").text
             company_name = self.driver.find_element_by_xpath("//a[@class='css-l4opor']").text
@@ -222,6 +227,7 @@ class Scraper():
             company_page = self.driver.find_element_by_xpath("//a[@class='css-l4opor']").get_attribute("href")
             offer_description = clean_html(self.driver.find_element_by_xpath("//div[@class='css-u2qsbz']").text)
 
+            #Append newly scrapped elements to their corresponding lists
             offer_link_list.append(offer_link)
             offer_title_list.append(offer_title)
             company_name_list.append(company_name)
@@ -234,7 +240,8 @@ class Scraper():
             company_page_list.append(direct_apply)
             direct_apply_list.append(company_page)
             offer_description_list.append(offer_description)
-            
+
+        #Save output to a Pandas data.frame object. 
         output = pd.DataFrame(list(zip(offer_link_list, 
                                     offer_title_list,
                                     company_name_list,
@@ -247,6 +254,7 @@ class Scraper():
                                     direct_apply_list,
                                     company_page_list, 
                                     offer_description_list)), columns=['offer_link', 'offer_title', 'company_name','company_size','empoyment_type','experience_lvl','salary','place','tech_stack','direct_apply','company_page','offer_description_list'])
+        #Return data.frame obejct
         return output
         
     # Destructor
