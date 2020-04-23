@@ -11,6 +11,21 @@ from os import path
 import pandas as pd
 import matplotlib.pyplot as plt #plots
 import logging #library for logging
+import re
+
+def clean_html(raw_html):
+    """Function removing html tags from string
+
+    Args:
+        String with html code
+
+    Returns:
+        Cleaned string
+
+    """
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
 
 
 class Scraper():
@@ -78,24 +93,24 @@ class Scraper():
 
     def location(self):
         
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
+        element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
         element.click()
         
         # user input
         self.choose_location = input("Please type, Which city are you interested in?: 'Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź': \t")
 
         if (self.choose_location in ['Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź']):
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{self.choose_location}"]')))
+            element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, f'//span[@class="MuiButton-label"][text() = "{self.choose_location}"]')))
             element.click()
         else: 
             print('There is no such location. You will have offers with all possibile cities.')
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="MuiButtonBase-root MuiIconButton-root css-tze5xj"]')))
+            element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="MuiButtonBase-root MuiIconButton-root css-tze5xj"]')))
             element.click()
 
     def salary(self):
         
 
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[text() = "More filters"]')))
+        element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//span[text() = "More filters"]')))
         element.click()
 
         # user inputs
@@ -112,7 +127,7 @@ class Scraper():
         move_right = ActionChains(self.driver)
         move_right.click_and_hold(en).move_by_offset(11 * (max_salary - 50000) / 1000, 0).release().perform()
 
-        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Show offers"]')))
+        element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Show offers"]')))
         element.click()
 
     def offers(self):
@@ -171,9 +186,69 @@ class Scraper():
                 break
             else:
                 continue
-
         return links
-    
+
+    def link_opener(self):
+        
+        links = self.offers()
+        
+        offer_link_list=[]
+        offer_title_list=[]
+        company_name_list=[]
+        company_size_list=[]
+        empoyment_type_list=[]
+        experience_lvl_list=[]
+        salary_list=[]
+        place_list=[]
+        tech_stack_list=[]
+        company_page_list=[]
+        direct_apply_list=[]
+        offer_description_list=[]
+        
+        for link in links:
+            self.driver.get(link)
+            #WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, "//span[@class='css-1v15eia']")))
+            
+            offer_link = link
+            offer_title = self.driver.find_element_by_xpath("//span[@class='css-1v15eia']").text
+            company_name = self.driver.find_element_by_xpath("//a[@class='css-l4opor']").text
+            company_size = self.driver.find_element_by_xpath("//div[2]/div[@class='css-1ji7bvd']").text
+            empoyment_type = self.driver.find_element_by_xpath("//div[3]/div[@class='css-1ji7bvd']").text
+            experience_lvl = self.driver.find_element_by_xpath("//div[4]/div[@class='css-1ji7bvd']").text
+            salary = self.driver.find_element_by_xpath("//span[@class='css-8cywu8']").text
+            place = self.driver.find_element_by_xpath("//div[@class='css-1d6wmgf']").text
+            tech_stack = [{i.text:j.text} for i,j in zip (self.driver.find_elements_by_xpath("//div[@class='css-1eroaug']"),self.driver.find_elements_by_xpath("//div[@class='css-19mz16e']"))]
+            direct_apply = True if len(self.driver.find_element_by_xpath("//button[@class='MuiButtonBase-root MuiButton-root MuiButton-text css-im43rs']").text) !=0 else False
+            company_page = self.driver.find_element_by_xpath("//a[@class='css-l4opor']").get_attribute("href")
+            offer_description = clean_html(self.driver.find_element_by_xpath("//div[@class='css-u2qsbz']").text)
+
+            offer_link_list.append(offer_link)
+            offer_title_list.append(offer_title)
+            company_name_list.append(company_name)
+            company_size_list.append(company_size)
+            empoyment_type_list.append(empoyment_type)
+            experience_lvl_list.append(experience_lvl)
+            salary_list.append(salary)
+            place_list.append(place)
+            tech_stack_list.append(tech_stack)
+            company_page_list.append(direct_apply)
+            direct_apply_list.append(company_page)
+            offer_description_list.append(offer_description)
+            
+        output = pd.DataFrame(list(zip(offer_link_list, 
+                                    offer_title_list,
+                                    company_name_list,
+                                    company_size_list,
+                                    empoyment_type_list,
+                                    experience_lvl_list,
+                                    salary_list,
+                                    place_list,
+                                    tech_stack_list,
+                                    direct_apply_list,
+                                    company_page_list, 
+                                    offer_description_list)), columns=['offer_link', 'offer_title', 'company_name','company_size','empoyment_type','experience_lvl','salary','place','tech_stack','direct_apply','company_page','offer_description_list'])
+        return output
+        
     # Destructor
     def __del__(self):
         self.driver.quit()
@@ -181,8 +256,8 @@ class Scraper():
 if __name__ == '__main__':
 
     c = Scraper()
+    links = c.link_opener()
+    links.to_csv('output.csv', encoding='utf-8')
 
-    links = c.offers()
-    for link in links:
-        print(link)
     c.__del__()
+
