@@ -261,8 +261,8 @@ class Scraper():
             salary_list.append(salary)
             place_list.append(place)
             tech_stack_list.append(tech_stack)
-            company_page_list.append(direct_apply)
-            direct_apply_list.append(company_page)
+            company_page_list.append(company_page)
+            direct_apply_list.append(direct_apply)
             offer_description_list.append(offer_description)
 
         #Save output to a Pandas data.frame object. 
