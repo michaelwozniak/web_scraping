@@ -11,7 +11,7 @@ Proper Selenium webdriver is needed. In this part of project geckodriver (Firefo
 In the directory "justjoinit_scraper/geckodriver" there is provided geckodriver 71.0.0.7222.
 
 If you decide to use other drivers, please swap driver file in the directory "justjoinit_scraper/project_selenium".
-Please also change code in "justjoinit_scraper.py" file (lines: 36, 38 and 43).
+Please also change code in "justjoinit_scraper.py" file (lines: 51, 53 and 60).
 
 ### User manual
 0. Go to the directory: "web_scraping/project_selenium/"
