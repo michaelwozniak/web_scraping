@@ -27,7 +27,7 @@ def clean_html(raw_html):
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
 
-
+##################################################### Author: Michał Wrzesiński ############################################################
 class Scraper():
 
     
@@ -51,6 +51,8 @@ class Scraper():
         gecko_path = path.join(os.path.dirname(os.path.abspath('__file__')), 'geckodriver')
         url = 'https://justjoin.it/'
         options = webdriver.firefox.options.Options()
+        
+        # headless mode depending on the initial choice of user
         if headless_mode == True:
             options.headless = True
         else:
@@ -81,7 +83,7 @@ class Scraper():
         if salary_expectations_bool == True:
             self.salary()
 
-        # Localization choice handling
+        # Location choice handling
         self.localization_choice_bool = input("Do you want to choose location of offer?: \t") \
             in {"T","True","TRUE",'Y',"yes","YES"}
         if self.localization_choice_bool == True:
@@ -90,7 +92,9 @@ class Scraper():
 
 
 
-
+    # Location 
+    # - if user chose location from all available - website will filter it, 
+    # - if not - website close the window with cities and there will be prompt in console that: 'There is no such location. You will have offers with all possibile cities.'
     def location(self):
         
         element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Location"]')))
@@ -107,6 +111,13 @@ class Scraper():
             element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="MuiButtonBase-root MuiIconButton-root css-tze5xj"]')))
             element.click()
 
+    # Salary
+    # This part goes on ActionChains from Selenium
+    # Scraper click on point on site and move to the desired position:
+    # Clicking on the element finding by xpath --> move_by_offset with formula:  (11 * min_salary / 1000, 0 for minimum) and (11 * (max_salary - 50000) / 1000, 0 form maximum)
+    # Multiplying by 11 and dividing by 1000 due to default settings on site (with horizontal slider)
+    # for example: 0 is default minimum salary expectations: if user enter 10000 - scraper will move point from 0 to 10000 horizontally [swipe from left to right]
+    # in the same way it works for maximum salary expectations -> from 50000 to exemplary 30000 [swipe from right to left]
     def salary(self):
         
 
@@ -130,6 +141,16 @@ class Scraper():
         element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH, '//span[@class="MuiButton-label"][text() = "Show offers"]')))
         element.click()
 
+    # Offers
+    # This part involves gathering links to pages
+    # It is possible due to while loop (links are appended till desired number of pages or to the bottom of the website)
+    # Loop for 2 lists: elements and location is necessery because of default settings of page:
+    # When there are only few offers from chosen city, website displays some offers from other cities
+    # Then, due to location list - we are certain that we gather links only for desired city
+    # Page Down key is necessery for scrolling down - after each iteration 
+        # gathering links to list
+        # checking if there are no duplicates - if yes, loop ignores those links
+        # checking if there new links - if no new links -> bottom of the page -> end of appending links
     def offers(self):
         
         # crating list of links of offers to further scraping
@@ -137,6 +158,7 @@ class Scraper():
 
         # while loop to reach destined number of pages
         while(len(links) < self.number):
+            # lists of elements and locations before 'Page Down'
             elements = self.driver.find_elements_by_css_selector("a.css-18rtd1e")
             locations = self.driver.find_elements_by_xpath("//div[@class='css-1ihx907']")
 
@@ -187,7 +209,9 @@ class Scraper():
             else:
                 continue
         return links
+########################################## End of Michał Wrzesiński part ##############################################
 
+########################################## Author: Rafał Rysiejko ####################################################
     def link_opener(self):
         
         #Call offers method to fetch url links to filtered offers.

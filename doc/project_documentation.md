@@ -11,7 +11,7 @@ Proper Selenium webdriver is needed. In this part of project geckodriver (Firefo
 In the directory "justjoinit_scraper/geckodriver" there is provided geckodriver 71.0.0.7222.
 
 If you decide to use other drivers, please swap driver file in the directory "justjoinit_scraper/project_selenium".
-Please also change code in "justjoinit_scraper.py" file (lines: 36, 38 and 43).
+Please also change code in "justjoinit_scraper.py" file (lines: 51, 53 and 60).
 
 ### User manual
 0. Go to the directory: "web_scraping/project_selenium/"
@@ -23,25 +23,23 @@ Please also change code in "justjoinit_scraper.py" file (lines: 36, 38 and 43).
 6. Analyze logs from scraping in an adequate file from the "logs" folder.
 
 ### Example
-Let's scrape job offers from Łódź in the salary range [10000, 14000].
+Let's scrape job offers from Warszawa without salary range.
 
-0. Go to the directory: "web_scraping/project_scrapy/justjoinit_scraper/justjoinit_scraper/"
-1. Run in the console "scrapy crawl justjoinit -o example_limit100_lodz_10000_140000.csv"
-2. Do you want to set the page limit to 100? [T/F]: **T**
-3. Do you want to scrap offers from all over Poland [T]? If not, press [F].: **F**
-4. Please type, Which city are you interested in: 'Berlin', 'Białystok', 'Bielsko-Biała', 'Billund', 'Bremen', 'Burbank', 'Bydgoszcz', 'Chicago', 'Chorzów', 'Culver City', 'Częstochowa', 'Dublin', 'Düsseldorf', 'Dąbrowa Górnicza', 'Gdańsk', 'Gdynia', 'Gliwice', 'Helsinki', 'Irvine', 'Katowice', 'Kielce', 'Kraków', 'Kroměříž', 'Kwidzyn', 'København', 'London', 'Londyn', 'Los Angeles', 'Los Gatos', 'Lublin', 'Lund/Stockholm', 'Luxembourgh', 'Malmo', 'Marki', 'Mediolan', 'Miami Beach', 'München', 'New York', 'Norymberga', 'Nowy Jork', 'Olsztyn', 'Opole', 'Ostrów Wielkopolski', 'Palo Alto', 'Paris', 'Pasadena', 'Portland', 'Poznań', 'Road Town', 'Rybnik', 'Rzeszów', 'Sadowa', 'San Francisco', 'Seattle', 'Singapore', 'Sopot', 'Swarzędz', 'Szczecin', 'Tczew', 'Toruń', 'Tychy', 'Unterföhring', 'Ustroń', 'Valetta', 'Warsaw', 'Warszawa', 'Wałbrzych', 'Wrocław', 'Zabierzów', 'Zielona Góra', 'Łódź', 'Świdnica', 'Краків': **Łódź**
-5. Do you want to provide boundaries of salary (logical alternative) [T/F]: **T**
-6. Please provide lower boundaries:: **10000**
-7. Please provide upper boundaries: **14000**
-8. Wait for the scraping to finish.
-9. Analyze "justjoinit_scraper/example_limit100_lodz_10000_140000.csv".
-5. Analyze logs from scraping in an adequate file from the "justjoinit_scraper/logs" folder.
+0. Go to the directory: "web_scraping/project_selenium/"
+1. Run in the console "python justjoinit_scraper.py"
+2. Do you want to provide boundaries of salary (logical alternative) [T/F]: **F**
+3. Do you want to choose location of offer?: **T**
+4. Please type, Which city are you interested in?: 'Białystok', 'Bielsko-Biała', 'Bydgoszcz', 'Częstochowa', 'Gliwice', 'Katowice', 'Kielce', 'Kraków', 'Lublin', 'Olsztyn', 'Opole', 'Poznań', 'Rzeszów', 'Szczecin', 'Toruń', 'Trójmiasto', 'Warszawa', 'Wrocław', 'Zielona Góra', 'Łódź': **Warszawa**
+5. Wait for the scraping to finish.
+6. Analyze "web_scraping/project_selenium/example_Warszawa.csv".
+7. Analyze logs from scraping in an adequate file from the "justjoinit_scraper/logs" folder.
 
-Obtained file is available in the directory: "web_scraping/project_selenium/example_limit100_lodz_10000_140000.csv". 
+Obtained file is available in the directory: "web_scraping/project_selenium/". 
 
 ### Project tree
 ```bash
 └───project_selenium
+    │   example_Warszawa.csv
     ├───logs
     │       log_2020_04_11_20_52_48.526360.txt
     │   geckodriver.exe
