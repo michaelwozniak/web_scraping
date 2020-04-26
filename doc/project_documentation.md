@@ -44,7 +44,8 @@ Obtained file is available in the directory: "web_scraping/project_selenium/".
     │       log_2020_04_11_20_52_48.526360.txt
     │   geckodriver.exe
     │   geckodriver.txt
-    └───justjoinit_scraper.py
+    │   justjoinit_scraper.py  
+    └───Visualizations.ipynb
 
 ```
 
